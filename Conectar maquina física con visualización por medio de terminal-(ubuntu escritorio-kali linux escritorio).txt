@@ -1,0 +1,72 @@
+Conectar maquina física con visualización por medio de terminal:
+(ubuntu escritorio-kali linux escritorio)
+Aquí está un paso a paso detallado sobre cómo conectar una máquina física con Ubuntu a una máquina virtual Kali Linux a través de SSH.
+
+### Requisitos previos:
+- Una máquina física con Ubuntu instalada.
+- Una máquina virtual con Kali Linux ejecutándose en VirtualBox o cualquier otro software de virtualización.
+- Una conexión a Internet o una red local en la que ambas máquinas estén conectadas.
+
+### Paso 1: Configuración de la máquina virtual Kali
+1. **Arrancar la máquina virtual**: Inicia la máquina virtual Kali Linux.
+2. **Configurar la red**: 
+Asegúrate de que la máquina virtual esté en modo de red "Puente" (Bridge), para que obtenga una dirección IP en la misma red que la máquina Ubuntu.
+   - En VirtualBox, selecciona la máquina virtual, ve a "Configuración" > "Red" > "Adaptador 1" y selecciona "Adaptador puente".
+
+### Paso 2: Configurar SSH en Kali Linux
+1. **Instalar OpenSSH Server**:
+ En Kali Linux, abre una terminal y ejecuta los siguientes comandos para instalar el servidor SSH:
+   ```bash
+   sudo apt update
+   sudo apt install openssh-server
+   ```
+
+
+
+2. **Iniciar el servicio SSH**:
+ Inicia el servicio SSH y asegúrate de que se inicie automáticamente en el arranque:
+   ```bash
+   sudo systemctl start ssh
+   sudo systemctl enable ssh
+   ```
+3. **Verificar el estado del servicio SSH**: 
+Comprueba si el servicio SSH está funcionando correctamente:
+   ```bash
+   sudo systemctl status ssh
+   ```
+
+### Paso 3: Obtener la dirección IP de Kali Linux
+1. **Obtener la IP**: 
+En la terminal de Kali Linux, ejecuta el siguiente comando para obtener la dirección IP:
+   ```bash
+   ip a
+   ```
+   Anota la dirección IP asignada a la interfaz de red (por ejemplo, `eth0`).
+
+### Paso 4: Configurar Ubuntu para la conexión SSH
+1. **Abrir terminal**: En la máquina Ubuntu, abre una terminal.
+2. **Instalar cliente SSH (si no está instalado)**:
+ Aunque Ubuntu generalmente incluye un cliente SSH, puedes instalarlo manualmente si es necesario:
+   ```bash
+   sudo apt install openssh-client
+   ```
+
+### Paso 5: Conectarse a Kali Linux desde Ubuntu
+1. **Conexión SSH**: 
+En la terminal de Ubuntu, usa el siguiente comando para conectarte a la máquina virtual Kali Linux:
+   ```bash
+   ssh nombre_usuario@direccion_ip_de_kali
+   ```
+   Reemplaza `nombre_usuario` con tu nombre de usuario en Kali Linux y `direccion_ip_de_kali` con la dirección IP que obtuviste anteriormente.
+2. **Acepta la clave de host**:
+ La primera vez que te conectes, se te pedirá que aceptes la clave de host. Escribe "yes" y presiona Enter.
+3. **Ingresa la contraseña
+Ingresa la contraseña de tu cuenta de usuario en Kali Linux. Si la contraseña es correcta, te conectarás exitosamente.
+
+### Consejos adicionales:
+- **Configurar autenticación de clave pública**:
+ Para una mayor seguridad, puedes configurar la autenticación de clave pública SSH en lugar de usar una contraseña.
+- **Verificar la conectividad de red**: 
+Si no puedes conectarte, asegúrate de que ambas máquinas estén en la misma red y que no haya firewalls bloqueando la conexión.
+
+Con estos pasos, deberías poder conectar la máquina física Ubuntu a la máquina virtual Kali Linux usando SSH. 
